@@ -1,0 +1,14 @@
+{
+    "professores": {
+        "id": [],
+        "nome": []
+    },
+    
+    "producoes": {
+        "id": [],
+        "descricao": [],
+        "sigla": [],
+        "evento-periodico": [],
+        "qualis": []
+    }
+}
