@@ -13,20 +13,9 @@ import {
 } from "@refinedev/mui";
 import React from "react";
 
-export default function BlogPostList() {
+export default function ProducoesList() {
   const { dataGridProps } = useDataGrid({
     syncWithLocation: true,
-  });
-
-  const { data: categoryData, isLoading: categoryIsLoading } = useMany({
-    resource: "categories",
-    ids:
-      dataGridProps?.rows
-        ?.map((item: any) => item?.category?.id)
-        .filter(Boolean) ?? [],
-    queryOptions: {
-      enabled: !!dataGridProps?.rows,
-    },
   });
 
   const columns = React.useMemo<GridColDef[]>(
@@ -38,42 +27,27 @@ export default function BlogPostList() {
         minWidth: 50,
       },
       {
-        field: "title",
+        field: "descricao",
         flex: 1,
-        headerName: "Title",
+        headerName: "Descrição",
         minWidth: 200,
       },
       {
-        field: "content",
+        field: "sigla",
         flex: 1,
-        headerName: "content",
-        minWidth: 250,
-        renderCell: function render({ value }) {
-          if (!value) return "-";
-          return <MarkdownField value={value?.slice(0, 80) + "..." || ""} />;
-        },
+        headerName: "Sigla",
+        minWidth: 200,
       },
       {
-        field: "category",
+        field: "evento_periodico",
         flex: 1,
-        headerName: "Category",
-        minWidth: 300,
-        valueGetter: ({ row }) => {
-          const value = row?.category;
-          return value;
-        },
-        renderCell: function render({ value }) {
-          return categoryIsLoading ? (
-            <>Loading...</>
-          ) : (
-            categoryData?.data?.find((item) => item.id === value?.id)?.title
-          );
-        },
+        headerName: "Evento Periodico",
+        minWidth: 200,
       },
       {
-        field: "status",
+        field: "qualis",
         flex: 1,
-        headerName: "Status",
+        headerName: "Qualis",
         minWidth: 200,
       },
       {
@@ -103,7 +77,7 @@ export default function BlogPostList() {
         minWidth: 80,
       },
     ],
-    [categoryData]
+    
   );
 
   return (

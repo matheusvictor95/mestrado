@@ -1,14 +1,43 @@
 {
-    "professores": {
-        "id": [],
-        "nome": []
+  "professores": [
+    {
+      "id": "1",
+      "nome": "João"
     },
-    
-    "producoes": {
-        "id": [],
-        "descricao": [],
-        "sigla": [],
-        "evento-periodico": [],
-        "qualis": []
+    {
+      "id": "2",
+      "nome": "Maria"
+    },
+    {
+      "id": "5e9a",
+      "nome": "jorge"
+    },
+    {
+      "id": "2c00",
+      "nome": "Helena"
+    },
+    {
+      "id": "490a",
+      "nome": "Gabriel"
+    },
+    {
+      "id": "01be",
+      "nome": "Matheus"
+    },
+    {
+      "id": "2cea",
+      "nome": "juliana"
     }
+  ],
+  "blog_posts": [],
+  "producoes": [
+    {
+      "id": "cf27",
+      "descricao": "teste de descrição",
+      "sigla": "af",
+      "evento_periodico": "qualquer evento",
+      "qualis": "qualquer qualis"
+    }
+  ],
+  "categories": []
 }

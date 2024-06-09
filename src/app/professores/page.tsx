@@ -13,7 +13,7 @@ import {
 } from "@refinedev/mui";
 import React from "react";
 
-export default function BlogPostList() {
+export default function ProfessoresList() {
   const { dataGridProps } = useDataGrid({
     syncWithLocation: true,
   });
@@ -38,44 +38,12 @@ export default function BlogPostList() {
         minWidth: 50,
       },
       {
-        field: "title",
+        field: "nome",
         flex: 1,
-        headerName: "Title",
+        headerName: "Nome",
         minWidth: 200,
       },
-      {
-        field: "content",
-        flex: 1,
-        headerName: "content",
-        minWidth: 250,
-        renderCell: function render({ value }) {
-          if (!value) return "-";
-          return <MarkdownField value={value?.slice(0, 80) + "..." || ""} />;
-        },
-      },
-      {
-        field: "category",
-        flex: 1,
-        headerName: "Category",
-        minWidth: 300,
-        valueGetter: ({ row }) => {
-          const value = row?.category;
-          return value;
-        },
-        renderCell: function render({ value }) {
-          return categoryIsLoading ? (
-            <>Loading...</>
-          ) : (
-            categoryData?.data?.find((item) => item.id === value?.id)?.title
-          );
-        },
-      },
-      {
-        field: "status",
-        flex: 1,
-        headerName: "Status",
-        minWidth: 200,
-      },
+      
       {
         field: "createdAt",
         flex: 1,
