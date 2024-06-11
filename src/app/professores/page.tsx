@@ -18,16 +18,7 @@ export default function ProfessoresList() {
     syncWithLocation: true,
   });
 
-  const { data: categoryData, isLoading: categoryIsLoading } = useMany({
-    resource: "categories",
-    ids:
-      dataGridProps?.rows
-        ?.map((item: any) => item?.category?.id)
-        .filter(Boolean) ?? [],
-    queryOptions: {
-      enabled: !!dataGridProps?.rows,
-    },
-  });
+
 
   const columns = React.useMemo<GridColDef[]>(
     () => [
@@ -71,7 +62,7 @@ export default function ProfessoresList() {
         minWidth: 80,
       },
     ],
-    [categoryData]
+    
   );
 
   return (

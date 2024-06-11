@@ -74,6 +74,10 @@ export default function RootLayout({
                         },
                       },
                       {
+                        name: "dashboard",
+                        list: "/dashboard",
+                      },
+                      {
                         name: "categories",
                         list: "/categories",
                         create: "/categories/create",
