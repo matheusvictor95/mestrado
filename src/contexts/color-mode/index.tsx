@@ -1,72 +1,64 @@
-"use client";
-
-import CssBaseline from "@mui/material/CssBaseline";
-import GlobalStyles from "@mui/material/GlobalStyles";
-import { ThemeProvider } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { RefineThemes } from "@refinedev/mui";
-import Cookies from "js-cookie";
-import React, {
+import { RefineThemes } from "@refinedev/antd";
+import { ConfigProvider, theme } from "antd";
+import {
+  type PropsWithChildren,
   createContext,
   useEffect,
   useState,
-  type PropsWithChildren,
 } from "react";
 
 type ColorModeContextType = {
   mode: string;
-  setMode: () => void;
+  setMode: (mode: string) => void;
 };
 
 export const ColorModeContext = createContext<ColorModeContextType>(
   {} as ColorModeContextType
 );
 
-type ColorModeContextProviderProps = {
-  defaultMode?: string;
-};
+export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
+  children,
+}) => {
+  const colorModeFromLocalStorage = localStorage.getItem("colorMode");
+  const isSystemPreferenceDark = window?.matchMedia(
+    "(prefers-color-scheme: dark)"
+  ).matches;
 
-export const ColorModeContextProvider: React.FC<
-  PropsWithChildren<ColorModeContextProviderProps>
-> = ({ children, defaultMode }) => {
-  const [isMounted, setIsMounted] = useState(false);
-  const [mode, setMode] = useState(defaultMode || "light");
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  const systemTheme = useMediaQuery(`(prefers-color-scheme: dark)`);
+  const systemPreference = isSystemPreferenceDark ? "dark" : "light";
+  const [mode, setMode] = useState(
+    colorModeFromLocalStorage || systemPreference
+  );
 
   useEffect(() => {
-    if (isMounted) {
-      const theme = Cookies.get("theme") || (systemTheme ? "dark" : "light");
-      setMode(theme);
+    window.localStorage.setItem("colorMode", mode);
+  }, [mode]);
+
+  const setColorMode = () => {
+    if (mode === "light") {
+      setMode("dark");
+    } else {
+      setMode("light");
     }
-  }, [isMounted, systemTheme]);
-
-  const toggleTheme = () => {
-    const nextTheme = mode === "light" ? "dark" : "light";
-
-    setMode(nextTheme);
-    Cookies.set("theme", nextTheme);
   };
+
+  const { darkAlgorithm, defaultAlgorithm } = theme;
 
   return (
     <ColorModeContext.Provider
       value={{
-        setMode: toggleTheme,
+        setMode: setColorMode,
         mode,
       }}
     >
-      <ThemeProvider
-        // you can change the theme colors here. example: mode === "light" ? RefineThemes.Magenta : RefineThemes.MagentaDark
-        theme={mode === "light" ? RefineThemes.Blue : RefineThemes.BlueDark}
+      <ConfigProvider
+        // you can change the theme colors here. example: ...RefineThemes.Magenta,
+        theme={{
+          ...RefineThemes.Blue,
+          algorithm: mode === "light" ? defaultAlgorithm : darkAlgorithm,
+        }}
       >
-        <CssBaseline />
-        <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
         {children}
-      </ThemeProvider>
+      </ConfigProvider>
     </ColorModeContext.Provider>
   );
 };
